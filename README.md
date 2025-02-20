@@ -1,7 +1,7 @@
 # Nurse_Staffing_Payroll_Analytics
 Analyzing Payroll Based Journal (PBJ) Daily Nurse Staffing data to assess staffing trends across nursing homes in the U.S. Identifying high-demand regions for contractor staffing by calculating contractor-to-employee ratios and correlating staffing levels with quality ratings.
 ## processing stages:
-1.Upload the data and explore it
+### 1.Upload the data and explore it
 After downloading the data set, I started to work with it in python.
 
 First, I load the csv dataset and turned it into a Pandas data frame.
@@ -12,7 +12,7 @@ After that, I calculated statistical facts(count, mean, std, min, max,…) for e
 
 and then I Calculated all providers names and counts.
 
-2.Preprocess the data 
+### 2.Preprocess the data 
 The purpose of preprocessing the data is to clean the data in a way that we can work better with it and gain more accurate results. I started by cleaning the data. First delete unnecessary columns for the processing. The CY_Qtr column was deleted because all data from this dataset belonged to the last quarter.
 Now the data has 32 columns. There are 2 types of data, categorical data and numerical data.
 
@@ -36,10 +36,10 @@ There is a column in the data set that represents the date: WorkDate. This colum
 
 
 
-3. visualization
+### 3. visualization
 Using tables and charts to visualize the data
 
-4. recommendations
+### 4. recommendations
 4.1. I wanted to find out top providers in every state to become aware of our most powerful competitors in each state and also how many hours of work they provide. 
 To answer this question, I group the information first by state and then by provider.  then I calculate the sum of these 3 columns ('Hrs_total', 'Hrs_total_emp', 'Hrs_total_ctr’) for each state, provider. After that, I sort the information based on the state and total hours. Now we have a dataframe of 5 columns which show us the top providers in each state and how many hours of work they reported in 3 categories of employees, contracts, and total.
 This is a schema of the dataframe. The whole dataframe has been saved as a csv file and is attached to the report.
