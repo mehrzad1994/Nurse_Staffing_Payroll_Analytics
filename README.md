@@ -1,127 +1,43 @@
 # Nurse_Staffing_Payroll_Analytics
 Analyzing Payroll Based Journal (PBJ) Daily Nurse Staffing data to assess staffing trends across nursing homes in the U.S. Identifying high-demand regions for contractor staffing by calculating contractor-to-employee ratios and correlating staffing levels with quality ratings.
-##processing stages:
+## processing stages:
 1.Upload the data and explore it
-After downloading the data set, I started to work with it in python.( All my codes will be included with the report)
-The explanation of the columns in the dataset provided by the website:
-PROVNUM:Medicare provider number
-PROVNAME:Provider name
-CITY:Provider City
-STATE:Postal abbreviation for State
-COUNTY_NAME:Name of Provider County, unique within state
-COUNTY_FIPS:FIPS Code for Provider County, unique within state
-CY_Qtr:Calendar Quarter (yyyyQq, e.g. 2018Q4)
-WorkDate:Day for Reported Hours (yyyymmdd)
-MDScensus:Resident Census from MDS
-Hrs_RNDON:Total Hours for RN Director of Nursing
-Hrs_RNDON_emp:Employee Hours for RN Director of Nursing
-Hrs_RNDON_ctr:Contract Hours for RN Director of Nursing
-Hrs_RNadmin:Hours for RN with administrative duties
-Hrs_RNadmin_emp:Employee Hours for RN with administrative duties
-Hrs_RNadmin_ctr:Contract Hours for RN with administrative duties
-Hrs_RN:Total Hours for RN
-Hrs_RN_emp:Employee Hours for RN
-Hrs_RN_ctr:Contract Hours for RN
-Hrs_LPNadmin:Total Hours for LPN w/ admin duties
-Hrs_LPNadmin_emp:Employee Hours for LPN w/ admin duties
-Hrs_LPNadmin_ctr:Contract Hours for LPN w/ admin duties
-Hrs_LPN:Total Hours for LPN
-Hrs_LPN_emp:Employee Hours for LPN
-Hrs_LPN_ctr:Contract Hours for LPN
-Hrs_CNA:Total Hours for CNA
-Hrs_CNA_emp:Employee Hours for CNA
-Hrs_CNA_ctr:Contract Hours for CNA
-Hrs_NAtrn:Total Hours for Nurse aide in training
-Hrs_NAtrn_emp:Employee Hours for Nurse aide in training
-Hrs_NAtrn_ctr:Contract Hours for Nurse aide in training
-Hrs_MedAide:Total Hours for Med Aide/Technician
-Hrs_MedAide_emp:Employee Hours for Med Aide/Technician
-Hrs_MedAide_ctr:Contract Hours for Med Aide/Technician
+After downloading the data set, I started to work with it in python.
 
 First, I load the csv dataset and turned it into a Pandas data frame.
 Then I ran some code on the data frame to get more familiar with the data set.
 The dataset has 1330966 rows, and 33 columns.
-This is how the first 5 rows of the data frame look like:
- 
 
 After that, I calculated statistical facts(count, mean, std, min, max,…) for every numerical column.(more detailed information is included with the code.)
- 
-All columns’ values:
-['PROVNUM' 'PROVNAME' 'CITY' 'STATE' 'COUNTY_NAME' 'COUNTY_FIPS' 'CY_Qtr'
- 'WorkDate' 'MDScensus' 'Hrs_RNDON' 'Hrs_RNDON_emp' 'Hrs_RNDON_ctr'
- 'Hrs_RNadmin' 'Hrs_RNadmin_emp' 'Hrs_RNadmin_ctr' 'Hrs_RN' 'Hrs_RN_emp'
- 'Hrs_RN_ctr' 'Hrs_LPNadmin' 'Hrs_LPNadmin_emp' 'Hrs_LPNadmin_ctr'
- 'Hrs_LPN' 'Hrs_LPN_emp' 'Hrs_LPN_ctr' 'Hrs_CNA' 'Hrs_CNA_emp'
- 'Hrs_CNA_ctr' 'Hrs_NAtrn' 'Hrs_NAtrn_emp' 'Hrs_NAtrn_ctr' 'Hrs_MedAide'
- 'Hrs_MedAide_emp' 'Hrs_MedAide_ctr']
-Calculate all providers names and counts.
- 
+
+and then I Calculated all providers names and counts.
 
 2.Preprocess the data 
 The purpose of preprocessing the data is to clean the data in a way that we can work better with it and gain more accurate results. I started by cleaning the data. First delete unnecessary columns for the processing. The CY_Qtr column was deleted because all data from this dataset belonged to the last quarter.
 Now the data has 32 columns. There are 2 types of data, categorical data and numerical data.
-Categorical columns:
-['PROVNUM', 'PROVNAME', 'CITY', 'STATE', 'COUNTY_NAME']
-Numerical columns:
-['COUNTY_FIPS', 'WorkDate', 'MDScensus', 'Hrs_RNDON', 'Hrs_RNDON_emp',
-       'Hrs_RNDON_ctr', 'Hrs_RNadmin', 'Hrs_RNadmin_emp', 'Hrs_RNadmin_ctr',
-       'Hrs_RN', 'Hrs_RN_emp', 'Hrs_RN_ctr', 'Hrs_LPNadmin',
-       'Hrs_LPNadmin_emp', 'Hrs_LPNadmin_ctr', 'Hrs_LPN', 'Hrs_LPN_emp',
-       'Hrs_LPN_ctr', 'Hrs_CNA', 'Hrs_CNA_emp', 'Hrs_CNA_ctr', 'Hrs_NAtrn',
-       'Hrs_NAtrn_emp', 'Hrs_NAtrn_ctr', 'Hrs_MedAide', 'Hrs_MedAide_emp',
-       'Hrs_MedAide_ctr']
-
-Data format of each feature(column) :
-PROVNUM              object
-PROVNAME             object
-CITY                 object
-STATE                object
-COUNTY_NAME          object
-COUNTY_FIPS           int64
-WorkDate              int64
-MDScensus             int64
-Hrs_RNDON           float64
-Hrs_RNDON_emp       float64
-Hrs_RNDON_ctr       float64
-Hrs_RNadmin         float64
-Hrs_RNadmin_emp     float64
-Hrs_RNadmin_ctr     float64
-Hrs_RN              float64
-Hrs_RN_emp          float64
-Hrs_RN_ctr          float64
-Hrs_LPNadmin        float64
-Hrs_LPNadmin_emp    float64
-Hrs_LPNadmin_ctr    float64
-Hrs_LPN             float64
-Hrs_LPN_emp         float64
-Hrs_LPN_ctr         float64
-Hrs_CNA             float64
-Hrs_CNA_emp         float64
-Hrs_CNA_ctr         float64
-Hrs_NAtrn           float64
-Hrs_NAtrn_emp       float64
-Hrs_NAtrn_ctr       float64
-Hrs_MedAide         float64
-Hrs_MedAide_emp     float64
-Hrs_MedAide_ctr     float64
 
 Then, I added 3 new columns:
 Hrs_total which represent the total hours of work of all kinds of staff.
 Which is the sum of these columns:
 ['Hrs_RNDON', 'Hrs_RNadmin', 'Hrs_RN', 'Hrs_LPNadmin', 'Hrs_LPN', 'Hrs_CNA', 'Hrs_NAtrn', 'Hrs_MedAide']
+
 Hrs_total_emp which represent the total hours of work of all employees of any kind.
 Which is the sum of these columns:
 ['Hrs_RNDON_emp', 'Hrs_RNadmin_emp', 'Hrs_RN_emp', 'Hrs_LPNadmin_emp', 'Hrs_LPN_emp', 'Hrs_CNA_emp', 'Hrs_NAtrn_emp', 'Hrs_MedAide_emp']
+
 And Hrs_total_ctr which represent the total hours of work of all contractors of any kind.
 Which is sum of these columns:
  ['Hrs_RNDON_ctr', 'Hrs_RNadmin_ctr', 'Hrs_RN_ctr', 'Hrs_LPNadmin_ctr',  'Hrs_LPN_ctr', 'Hrs_CNA_ctr', 'Hrs_NAtrn_ctr', 'Hrs_MedAide_ctr']
+
 Now the data set has 35 columns.
+
 The next step in cleaning the data is to deal with non-values. For the purpose of this task the none-values has replaced with 0s.
 There is a column in the data set that represents the date: WorkDate. This column is saved as a string value. So, it had to change to a date time data type so that it can be used in the tables and graphs.
+
+
+
 3. visualization
 Using tables and charts to visualize the data
-first chart showing the total hours of all staff on every day during the last quarter:
- 
 
 4. recommendations
 4.1. I wanted to find out top providers in every state to become aware of our most powerful competitors in each state and also how many hours of work they provide. 
